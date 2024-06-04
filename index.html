@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Web App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #a8c0ff, #fdfbfb);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #78909c;
+            color: #fff;
+            border-radius: 12px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #546e7a;
+            transform: translateY(-2px);
+        }
+
+        .file-name {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #333;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        input[type="text"],
+        button,
+        textarea {
+            display: block;
+            width: calc(100% - 40px);
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        textarea {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        button {
+            background-color: #78909c;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #546e7a;
+            transform: translateY(-2px);
+        }
+
+        img {
+            max-width: 100%;
+            margin: 10px 0;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #78909c;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a:hover {
+            background-color: #546e7a;
+            transform: translateY(-2px);
+        }
+
+        hr {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                height: auto;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Steganography Web App</h1>
+    <div class="container">
+        <h2>Encode Image with Text</h2>
+        <label for="uploadImage" class="custom-file-upload">Choose Image</label>
+        <input type="file" id="uploadImage" accept="image/*" onchange="showFileName('uploadImage', 'uploadImageName')">
+        <span id="uploadImageName" class="file-name"></span>
+        <input type="text" id="secretMessage" placeholder="Enter message">
+        <button onclick="encodeImage()">Encode Image</button>
+        <img id="encodedImage" style="display:none;">
+        <a id="downloadLink" style="display:none;">Download Encoded Image</a>
+    </div>
+    <hr>
+    <div class="container">
+        <h2>Decode Text from Image</h2>
+        <label for="decodeImageUpload" class="custom-file-upload">Choose Image</label>
+        <input type="file" id="decodeImageUpload" accept="image/*" onchange="showFileName('decodeImageUpload', 'decodeImageName')">
+        <span id="decodeImageName" class="file-name"></span>
+        <button onclick="decodeImage()">Decode Image</button>
+        <textarea id="decodedMessage" rows="4" cols="50" readonly></textarea>
+    </div>
+    <script>
+        function showFileName(inputId, spanId) {
+            const input = document.getElementById(inputId);
+            const span = document.getElementById(spanId);
+            const fileName = input.files[0].name;
+            span.textContent = fileName;
+        }
+    </script>
+    <script src="steganography.js"></script>
+</body>
+</html>
